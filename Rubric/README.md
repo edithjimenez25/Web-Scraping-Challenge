@@ -1,10 +1,15 @@
 | Web Scraping in Jupyter Notebook |
+|------------- | ------------- |
 | The Jupyter notebook does all of the following:|
 | ------------- | ------------- |
 | 1.   | Scrapes the most recent NASA news  |
+| ------------- | ------------- |
 | 2.   | Scrapes the URL for the featured image |
+| ------------- | ------------- |
 | 3.   | Scrapes the latest weather from twitter  |
+| ------------- | ------------- |
 | 4.   | Scrapes all 4 hemisphere image urls |
+| ------------- | ------------- |
 | 5.   | Scrapes the Mars facts HTML table |
 | ------------- | ------------- |
 
