@@ -1,8 +1,11 @@
+Sope:
+
+|------------- | ------------- |
 | Web Scraping in Jupyter Notebook |
 |------------- | ------------- |
 | The Jupyter notebook does all of the following:|
 | ------------- | ------------- |
-| 1.   | Scrapes the most recent NASA news  |
+| 1.   | Scrapes the most recent NASA news |
 | ------------- | ------------- |
 | 2.   | Scrapes the URL for the featured image |
 | ------------- | ------------- |
