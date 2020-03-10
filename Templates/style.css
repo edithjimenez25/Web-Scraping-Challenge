@@ -1,0 +1,99 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: arial, sans-serif, helvetica;
+  background-color: #4F2002;
+  color: white;
+}
+
+.header {
+	text-align: center;
+	background-image: url("img/marsbackground.jpg");
+	background-size: 100%; 
+	padding-top: 15%;
+	padding-bottom: 0%;
+}
+
+.header h1 {
+	font-size: 50px;
+	font-weight: 750;
+	margin-bottom: 100px;
+}
+
+.scrapebtn {
+	border: 2px solid white;
+  	padding: 15px 32px;
+  	color: white;
+  	text-align: center;
+  	text-decoration: none;
+  	display: inline-block;
+  	font-size: 16px;
+  	margin: 4px 2px;
+  	cursor: pointer;
+}
+
+.arrow {
+	margin-top: 200px;
+	max-width: 5%;
+    height: auto;
+}
+
+.newscontainer {
+	margin-top: 100px;
+	padding-left: 100px;
+	margin-bottom: 100px;
+}
+
+.newscontainer h3 {
+	margin-bottom: 30px;
+}
+
+.container2 {
+	margin: 100px;
+}
+.row {
+	margin-top: 100px;
+}
+
+.col-lg-1 {
+	margin-bottom: 50px;
+	float: left;
+	padding-right: 500px;
+}
+
+.col-lg-2 {
+	margin-left: 700px;
+}
+.col-lg-2 img {
+	width: 400px;
+}
+
+.col-lg-3 {
+	float: left;
+	margin-right: 700px;
+	margin-bottom: -80px;
+}
+
+.col-lg-4 {
+	margin-left: 700px
+}
+
+.col-lg-4 img {
+	width: 400px;
+}
+
+.smallcontainer img {
+	width: 200px;
+	margin: 20px 20px 20px 0px;
+}
+
+.col-md-5 {
+	float: left;
+}
+
+.col-md-7 {
+	float: left;
+}
+
