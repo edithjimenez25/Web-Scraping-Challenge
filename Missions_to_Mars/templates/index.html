@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Mission to Mars</title>
+	<link rel="shortcut icon" type="image/x-icon" href="../static/images/mars.png">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="../static/css/style.css">
+</head>
+
+<body>
+	<div class="container">
+		<div class="header">
+			<h1>Mission to Mars</h1>
+			<a class="scrapebtn" href="#">New Data</a><br>
+			<img class="arrow" src="../static/images/arrow.png">
+		</div> <!--header-->
+		<!--Mars News ------------------------->
+		<div class="newscontainer">
+			<h3>NASA Latest Mars News</h3>
+			<h5>{{mars_data.news_title}}</h5> 
+			<p>{{mars_data.news_paragraph}}</p>
+		</div> <!--NewsContainer-->
+		<!--Mars Facts --------------------------------------------->
+		<div class="container2">
+			<div class="row">
+				<div class="col-lg-1">
+					<h3>Mars Facts</h3><br>
+					{{mars_data.mars_facts_table}}
+				</div><!--end of col-lg-1-->
+
+				<!--JPL Mars Space Images - Featured Images ------------------->		
+				<div class="col-lg-2">
+					<h3>JPL Mars Featured Images</h3> <br>
+					<img src="{{mars_data.featured_image_url}}" class="img-fluid" alt="Mars Space Image"/>
+				</div> <!--end of col-lg-2-->
+			</div> <!--row-->
+
+			<!--Mars Weather from Tweeter ----------------------------->
+			<div class="row">
+				<div class="col-lg-3">
+					<h3>Mars Weather</h3><br>
+					<p class="text">{{mars_data.weather_tweet}}</p> 
+				</div> <!--col-lg-3-->
+
+				<!--Mars Hemispheres -------------------------------->
+				<div class="col-lg-4">
+					<h3>Mars Hemispheres</h3>
+                    <div class="card-deck">
+                        <hr>
+                        <div class="col-md-12">
+                            <div class="row">
+                                {% for hemisphere in mars_data.hemisphere_img_urls %}
+                                <div class="col-md-6">
+                                    <div class="card text-white bg-dark" style="margin: 30px;">
+                                        <img class="card-img-top" src="{{hemisphere.img_url }}" />
+                                        <div class="card-body">
+                                            <p class="card-text">{{hemisphere.title }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div><!--close card deck-->
+				</div> col-lg-4
+			</div> <!--row-->
+		</div><!--container2-->
+	</div> <!--container-->
+	<!-- Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
+</body>
+</html>
