@@ -15,27 +15,27 @@
 	<div class="container">
 		<div class="header">
 			<h1>Mission to Mars</h1>
-			<a class="scrapebtn" href="#">New Data</a><br>
+			<a class="scrapebtn" href="/scrape" role="button" >Update Data</a><br>
 			<img class="arrow" src="../static/images/arrow.png">
 		</div> <!--header-->
 		<!--Mars News ------------------------->
 		<div class="newscontainer">
 			<h3>NASA Latest Mars News</h3>
-			<h5>{{mars_data.news_title}}</h5> 
-			<p>{{mars_data.news_paragraph}}</p>
+			<h5>{{news.title}}</h5> 
+			<p>{{news.paragraph}}</p>
 		</div> <!--NewsContainer-->
 		<!--Mars Facts --------------------------------------------->
 		<div class="container2">
 			<div class="row">
 				<div class="col-lg-1">
 					<h3>Mars Facts</h3><br>
-					{{mars_data.mars_facts_table}}
+					{{news.facts}}
 				</div><!--end of col-lg-1-->
 
 				<!--JPL Mars Space Images - Featured Images ------------------->		
 				<div class="col-lg-2">
 					<h3>JPL Mars Featured Images</h3> <br>
-					<img src="{{mars_data.featured_image_url}}" class="img-fluid" alt="Mars Space Image"/>
+					<img src="{{news.featured_image_url}}" class="img-fluid" alt="Mars Space Image"/>
 				</div> <!--end of col-lg-2-->
 			</div> <!--row-->
 
@@ -43,7 +43,7 @@
 			<div class="row">
 				<div class="col-lg-3">
 					<h3>Mars Weather</h3><br>
-					<p class="text">{{mars_data.weather_tweet}}</p> 
+					<p class="text">{{news.weather}}</p> 
 				</div> <!--col-lg-3-->
 
 				<!--Mars Hemispheres -------------------------------->
@@ -53,12 +53,12 @@
                         <hr>
                         <div class="col-md-12">
                             <div class="row">
-                                {% for hemisphere in mars_data.hemisphere_img_urls %}
+                                {% for item in news.hiu %}
                                 <div class="col-md-6">
                                     <div class="card text-white bg-dark" style="margin: 30px;">
-                                        <img class="card-img-top" src="{{hemisphere.img_url }}" />
+                                        <img class="card-img-top" src="{{item.img_url }}" />
                                         <div class="card-body">
-                                            <p class="card-text">{{hemisphere.title }}</p>
+                                            <p class="card-text">{{item.title }}</p>
                                         </div>
                                     </div>
                                 </div>
