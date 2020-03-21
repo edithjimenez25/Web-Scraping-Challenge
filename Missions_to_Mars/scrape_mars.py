@@ -37,10 +37,10 @@ def init_browser():
 ##############################################################################################
 ## Scrape data from Mars ##
 def scrape_data():
+    # create a dictionary to store the data scrapped
+    data_returned_dict = {}
 ### NASA Mars News
     try:
-        # store the response on a dictionary
-        data_dict = {}
         # Initialize the browser
         browser = init_browser()
         # Visit Nasa news url through splinter module
@@ -54,17 +54,22 @@ def scrape_data():
         soup = bs(html, 'html.parser')
 
         # Scrape the Latest News Title and assign the text to a variable
-        title = soup.find("div", class_="content_title").get_text()
-        paragraph = soup.find('div', class_='article_teaser_body').get_text()
-        # entry the data into dict
-        data_dict['title'] = title
-        data_dict['paragraph'] = paragraph
-        
-        return title, paragraph, data_dict
-
+        news = soup.find_all("div", class_="list_text")
+        mars_news = []
+        # Get the first news
+        for story in news:
+            title = story.find("div", class_="content_title").text
+            paragraph = story.find('div', class_='article_teaser_body').text
+            mars_news.append({'title': title, 'paragraph': paragraph})
+       
+        # return data scrapped in the dictionary
+        data_returned_dict['title'] = mars_news[0]['title']
+        data_returned_dict['paragraph'] = mars_news[0]['paragraph']
+    
     # quit the browser
     finally:
         browser.quit()
+        
 
 ##############################################################################################
 ### JPL Mars Space Images - Featured Image 
@@ -88,17 +93,13 @@ def scrape_data():
 
         # Website Url 
         jpl_url = 'https://www.jpl.nasa.gov'
+
         # Concatenate website jpl_url with scrapped route for the featured_image_url and obtain the complete link
         featured_image_url = jpl_url + image
 
-        # Create an empty dictionary to store the data scrape 
-        mars_news= []
-        # Add the JPL Mars Space Featured Image to the mars news dictionary
-        mars_news['featured_image_url'] = featured_image_url 
-
-        # Return featured image
-        return mars_news
-    
+        # return data scrapped in the dictionary
+        data_returned_dict['featuredImage'] = featured_image_url
+   
     # quit the browser
     finally:
         browser.quit()
@@ -121,22 +122,22 @@ def scrape_data():
         soup = bs(html, 'html.parser')
 
         # Find all elements that contain tweets on mars weather
-        weather = soup.find_all('div', class_='InSight')
+        latest_tweets = soup.find_all('div', class_='InSight')
 
         # return the latest_tweets
+        weatherTweet = "Error!"
         for tweet in latest_tweets: 
-            weather = tweet.find('p').text
-            if 'Sol' and 'pressure' in weather:
-                print(weather)
+            weatherTweet = tweet.find_all('span').text
+            if 'Sol' and 'pressure' in weatherTweet:
+                print(weatherTweet)
                 break
             else: 
                 pass
-        # Add dictionary to archive data from Mars Weather Twitter
-        mars_news['weather'] = weather
+        
+        # return data scrapped in the dictionary
+        data_returned_dict['weather'] = weatherTweet
 
-        # return the twitter scrape information
-        return mars_news
-    # quit the browser
+        # quit the browser
     finally:
         browser.quit()    
 
@@ -146,7 +147,6 @@ def scrape_data():
 # containing facts about the planet including Diameter, Mass, etc.
 # Use Pandas to convert the data to a HTML table string.
 
-# def space_facts():
     # Visit the URL https://space-facts.com/mars/ and scrape the table containing facts  
     space_facts_url = 'http://space-facts.com/mars/'
 
@@ -164,12 +164,9 @@ def scrape_data():
 
     #Create HTML code for the Mars Facts Table
     facts = mars_df.to_html()
-    
-    # Add dictionary to archive data from Mars Facts webpage
-    mars_news['mars_facts'] = facts
 
-    # Print the html code
-    return mars_news
+    # return data scrapped in the dictionary
+    data_returned_dict['facts'] = facts
 
 ##############################################################################################
 ### Mars Hemispheres 
@@ -190,11 +187,11 @@ def scrape_data():
         # Obtain all items that contain mars hemispheres information
         items = soup.find_all('div', class_='item')
         
-        # Create empty list for hemisphere urls
-        hiu = []
+        # Create empty list for hemisphere image urls (hiu)
+        hiu = []        
 
         # Store the main_url 
-        hemispheres_main_url = 'https://astrogeology.usgs.gov'
+        main_url = 'https://astrogeology.usgs.gov'
 
         # Loop through the items 
         for i in items:
@@ -205,7 +202,7 @@ def scrape_data():
             partial_img_url = i.find('a', class_='itemLink product-item')['href']
             
             # Visit the link that contains the full images website 
-            browser.visit(hemispheres_main_url + partial_img_url)
+            browser.visit(main_url + partial_img_url)
 
             # HTML Object of individual hemisphere information website 
             partial_img_html = browser.html  
@@ -214,17 +211,26 @@ def scrape_data():
             soup = bs( partial_img_html, 'html.parser')
 
             # Retrieve full image
-            img_url = hemispheres_main_url + soup.find('img', class_='wide-image')['src']
+            img_url = main_url + soup.find('img', class_='wide-image')['src']
             
             # Append the data retrieved into a list of dictionaries 
             hiu.append({"title" : title, "img_url" : img_url})
+
+        # return data scrapped in the dictionary
+        data_returned_dict['hemisphere'] = hiu
         
-        # Add dictionary to archive data from Mars Hemispheres
-        mars_news['hiu'] = hiu
-        
-        # Return mars_data dictionary with hemisphere_image_urls with title and image url
-        return mars_news
-    
-    # quit the browser
+        # quit the browser
     finally:
         browser.quit()
+
+    mars_info = {
+        'title' : title,
+        'paragraph': paragraph,
+        'featuredImage': featured_image_url,
+        'Weather': weatherTweet,
+        'marsFacts': facts,
+        'hemisphereImages': hiu
+    }
+
+    return mars_info
+

@@ -13,7 +13,7 @@ import scrape_mars
 app = Flask(__name__)
 #################################################
 # PyMongo Connection Setup
-mongo = PyMongo(app, uri="mongodb://localhost:27017/marsNews")
+mongo = PyMongo(app, uri="mongodb://localhost:27017/marsDB")
 
 #################################################
 # Flask Routes
@@ -25,7 +25,7 @@ mongo = PyMongo(app, uri="mongodb://localhost:27017/marsNews")
 @app.route("/")
 def home():
     # Find data using mongodb 
-    mars_info = mongo.db.mars_info.find_one()
+    mars_info = mongo.db.collection.find_one()
 
     #return template and data using jinja 
     return render_template("index.html", news=mars_info)
@@ -36,6 +36,9 @@ def scrape():
 
     #run the scrape functions
     mars_info = scrape_mars.scrape_data()
+
+    # Delete previously stored data
+    mongo.db.mars_data.drop()
 
     # Update Mongo database using update and upsert = true
     mongo.db.collection.update({}, mars_info, upsert=True)
