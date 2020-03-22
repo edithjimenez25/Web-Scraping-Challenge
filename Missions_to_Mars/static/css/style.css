@@ -54,16 +54,21 @@ body {
 	font-size: 30px;
 	
 }
-
+/* -----Container 2 ----*/
 .container2 {
-	margin: 100px;
-	padding-left: 20px;
+	margin: 5px;
+	padding-left: 10px;
 }
 
-.row {
-	margin-top: 100px;
+.h3 {
+    display: block;
+    font-size: 2.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
 }
-
 .col-lg-1 {
 	margin-bottom: 50px;
 	float: left;
@@ -77,29 +82,10 @@ body {
 	width: 400px;
 }
 
-.col-lg-3 {
-	float: left;
-	margin-right: 700px;
-	margin-bottom: -80px;
-}
-
-.col-lg-4 {
-	margin-left: 700px
-}
-
-.col-lg-4 img {
-	width: 400px;
-}
-
-.smallcontainer img {
-	width: 200px;
-	margin: 20px 20px 20px 0px;
-}
-
-.col-md-5 {
-	float: left;
-}
-
-.col-md-6 {
-	float: left;
+/* -----Container 3 ----*/
+.container3 {
+	margin-left: 100px;
+	margin-top: 20px;
+	padding-left: 20px;
+	max-width: 1200px;
 }
