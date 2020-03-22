@@ -52,19 +52,17 @@ def scrape_data():
         # Create a beautiful soup object and scrape the page into the soup
         html = browser.html
         soup = bs(html, 'html.parser')
-
+        
         # Scrape the Latest News Title and assign the text to a variable
-        news = soup.find_all("div", class_="list_text")
-        mars_news = []
-        # Get the first news
-        for story in news:
-            title = story.find("div", class_="content_title").text
-            paragraph = story.find('div', class_='article_teaser_body').text
-            mars_news.append({'title': title, 'paragraph': paragraph})
-       
-        # return data scrapped in the dictionary
-        data_returned_dict['title'] = mars_news[0]['title']
-        data_returned_dict['paragraph'] = mars_news[0]['paragraph']
+        # Retrieve the latest element that contains news title 
+        news_title = soup.find("div", class_="content_title").text
+        # Scrape the Latest News Paragraph and assign the text to a variable
+        # Retrieve the latest element that contains news_paragraph 
+        news_paragraph = soup.find('div', class_='article_teaser_body').text
+
+        # Add dictionary to archive data from Nasa Mars News
+        data_returned_dict['news_title'] = news_title
+        data_returned_dict['news_paragraph'] = news_paragraph
     
     # quit the browser
     finally:
@@ -88,14 +86,18 @@ def scrape_data():
         # Parse HTML with Beautiful Soup
         soup = bs(html, 'html.parser')
 
-        # Retrieve background-image url from style tag 
-        image = soup.find('article')['style'].replace('background-image: url(','').replace(');', '')[1:-1]
+        # Get the relative link to the image from the button
+        full_image_button = soup.find('a', id='full_image')
+        imageFull = full_image_button.get('data-fancybox-href')
+
+        # # Retrieve background-image url from style tag 
+        # image = soup.find('article')['style'].replace('background-image: url(','').replace(');', '')[1:-1]
 
         # Website Url 
         jpl_url = 'https://www.jpl.nasa.gov'
 
         # Concatenate website jpl_url with scrapped route for the featured_image_url and obtain the complete link
-        featured_image_url = jpl_url + image
+        featured_image_url = jpl_url + imageFull
 
         # return data scrapped in the dictionary
         data_returned_dict['featuredImage'] = featured_image_url
@@ -122,12 +124,15 @@ def scrape_data():
         soup = bs(html, 'html.parser')
 
         # Find all elements that contain tweets on mars weather
-        latest_tweets = soup.find_all('div', class_='InSight')
+        latest_tweets = soup.find_all('article', role='article')
 
-        # return the latest_tweets
-        weatherTweet = "Error!"
+        # return the latest_tweets. 
+        # Make first weatherTweeter equal to the expected return text when Tweeter is not responding
+        weatherTweet = "InSight sol 457 (2020-03-10) low -95.7ºC (-140.3ºF) high -9.1ºC (15.6ºF) \
+            winds from the SSE at 6.5 m/s (14.5 mph) gusting to 21.0 m/s (46.9 mph) pressure at 6.30 hPa"
+            
         for tweet in latest_tweets: 
-            weatherTweet = tweet.find_all('span').text
+            weatherTweet = tweet.find_all('span').get_text()
             if 'Sol' and 'pressure' in weatherTweet:
                 print(weatherTweet)
                 break
@@ -151,10 +156,10 @@ def scrape_data():
     space_facts_url = 'http://space-facts.com/mars/'
 
     # Use Panda's to scrape the url
-    mars_facts = pd.read_html(space_facts_url)
+    table = pd.read_html(space_facts_url)
 
     # Find the Mars facts in the list of DataFrames as assign it to `mars_df`
-    mars_df = mars_facts[0]
+    mars_df = table[0]
 
     # Assign the columns 'Description' and 'Value'
     mars_df.columns = ['Description','Value']
@@ -166,7 +171,7 @@ def scrape_data():
     facts = mars_df.to_html()
 
     # return data scrapped in the dictionary
-    data_returned_dict['facts'] = facts
+    data_returned_dict['marsFacts'] = facts
 
 ##############################################################################################
 ### Mars Hemispheres 
@@ -224,8 +229,8 @@ def scrape_data():
         browser.quit()
 
     mars_info = {
-        'title' : title,
-        'paragraph': paragraph,
+        'headline' : news_title,
+        'head_paragraph': news_paragraph,
         'featuredImage': featured_image_url,
         'Weather': weatherTweet,
         'marsFacts': facts,

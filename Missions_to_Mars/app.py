@@ -39,7 +39,7 @@ def scrape():
 
     # Delete previously stored data
     mongo.db.mars_data.drop()
-
+ 
     # Update Mongo database using update and upsert = true
     mongo.db.collection.update({}, mars_info, upsert=True)
 
